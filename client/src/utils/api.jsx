@@ -1,21 +1,21 @@
-
-import axios from 'axios';
+import axios from "axios";
 
 // Base API URL - change this for production
-const API_BASE_URL = 'http://localhost:5000/api';
+// eslint-disable-next-line no-undef
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://exam-portal-40mc.onrender.com';
 
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Add token to requests automatically
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,9 +32,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expired or invalid - logout user
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -45,13 +45,13 @@ api.interceptors.response.use(
 export const authAPI = {
   // Register new user
   register: async (userData) => {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post("/auth/register", userData);
     return response.data;
   },
 
   // Login user
   login: async (credentials) => {
-    const response = await api.post('/auth/login', credentials);
+    const response = await api.post("/auth/login", credentials);
     return response.data;
   },
 };
@@ -61,7 +61,7 @@ export const authAPI = {
 export const examAPI = {
   // Get all exams
   getAllExams: async () => {
-    const response = await api.get('/exams');
+    const response = await api.get("/exams");
     return response.data;
   },
 
@@ -73,7 +73,7 @@ export const examAPI = {
 
   // Create new exam (admin only)
   createExam: async (examData) => {
-    const response = await api.post('/exams', examData);
+    const response = await api.post("/exams", examData);
     return response.data;
   },
 
@@ -95,7 +95,7 @@ export const examAPI = {
 export const resultAPI = {
   // Submit exam answers
   submitExam: async (examId, answers) => {
-    const response = await api.post('/results/submit', {
+    const response = await api.post("/results/submit", {
       examId,
       answers,
     });
@@ -104,13 +104,13 @@ export const resultAPI = {
 
   // Get my results (student)
   getMyResults: async () => {
-    const response = await api.get('/results/my-results');
+    const response = await api.get("/results/my-results");
     return response.data;
   },
 
   // Get all results (admin only)
   getAllResults: async () => {
-    const response = await api.get('/results/all');
+    const response = await api.get("/results/all");
     return response.data;
   },
 };
