@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Base API URL - change this for production
 // eslint-disable-next-line no-undef
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://exam-portal-40mc.onrender.com/api';
+const API_BASE_URL = "https://exam-portal-40mc.onrender.com/api";
 
 // Create axios instance with default config
 const api = axios.create({
