@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+const app = express();
 const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
 
 app.use(
@@ -10,8 +12,6 @@ app.use(
     credentials: true,
   })
 );
-const app = express();
-
 app.use(cors());
 app.use(express.json());
 
